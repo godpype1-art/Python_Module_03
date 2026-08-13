@@ -9,6 +9,10 @@ class Duplicate(Exception):
     ...
 
 
+class NoQuantity(Exception):
+    ...
+
+
 def main() -> None:
     print("=== Inventory System Analysis ===")
     inventory: dict[str, int] = {}
@@ -17,6 +21,8 @@ def main() -> None:
             l_arg: list[str] = arg.split(":")
             if len(l_arg) != 2:
                 raise Invalid(f"Invalid parameter: '{l_arg[0]}'")
+            if l_arg[1] == "0":
+                raise NoQuantity(f"Invalid quantity: '{l_arg[1]}'")
             item: str = l_arg[0]
             quantity: int = int(l_arg[1])
             if item in inventory:
@@ -25,7 +31,10 @@ def main() -> None:
             print(f"{error}")
         except Duplicate as error:
             print(f"{error}")
+        except NoQuantity as error:
+            print(f"{error}")
         except ValueError as error:
+            "''"
             print(f"Quantity error for {item}: {error}")
         else:
             inventory[item] = quantity
