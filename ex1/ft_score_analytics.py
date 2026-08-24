@@ -16,7 +16,7 @@ def main() -> None:
         try:
             score: int = int(sys.argv[i])
             l_scores.append(score)
-        except Exception:
+        except ValueError:
             print(f"Invalid parameter: '{sys.argv[i]}'")
         i += 1
     if len(l_scores) == 0:
