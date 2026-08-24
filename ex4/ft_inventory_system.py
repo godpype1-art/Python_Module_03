@@ -34,7 +34,6 @@ def main() -> None:
         except NoQuantity as error:
             print(f"{error}")
         except ValueError as error:
-            "''"
             print(f"Quantity error for {item}: {error}")
         else:
             inventory[item] = quantity

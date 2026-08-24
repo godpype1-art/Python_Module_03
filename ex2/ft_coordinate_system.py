@@ -15,11 +15,11 @@ def get_player_pos() -> tuple[float, float, float]:
             y: float = float(parts[1].strip())
             z: float = float(parts[2].strip())
             return (x, y, z)
-        except Exception as error:
+        except ValueError as error:
             for part in parts:
                 try:
                     float(part.strip())
-                except Exception:
+                except ValueError:
                     bad: str = part.strip()
                     print(f"Error on parameter '{bad}': {error}")
 
