@@ -19,7 +19,7 @@ def main() -> None:
     for arg in sys.argv[1:]:
         try:
             l_arg: list[str] = arg.split(":")
-            if len(l_arg) != 2:
+            if len(l_arg) != 2 or not l_arg[0] or l_arg[0].strip() == "":
                 raise Invalid(f"Invalid parameter: '{l_arg[0]}'")
             if l_arg[1] == "0":
                 raise NoQuantity(f"Invalid quantity: '{l_arg[1]}'")
@@ -27,11 +27,7 @@ def main() -> None:
             quantity: int = int(l_arg[1])
             if item in inventory:
                 raise Duplicate(f"Redundant item '{item}' - discarding")
-        except Invalid as error:
-            print(f"{error}")
-        except Duplicate as error:
-            print(f"{error}")
-        except NoQuantity as error:
+        except (Invalid, Duplicate, NoQuantity) as error:
             print(f"{error}")
         except ValueError as error:
             print(f"Quantity error for {item}: {error}")
@@ -49,7 +45,7 @@ def main() -> None:
     min_qty: int | None = None
     for item in inventory:
         quantity = inventory[item]
-        percent: float = round((quantity / total_items) * 100, 1)
+        percent: float = round((quantity / total_items) * 100)
         print(f"Item {item} represents {percent}%")
         if max_qty is None or quantity > max_qty:
             max_qty = quantity
